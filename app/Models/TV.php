@@ -14,6 +14,11 @@ class TV extends Model
         return $this->morphMany(Deal::class, 'dealable');
     }
 
+    public function coverageAreas()
+    {
+        return $this->morphMany(CoverageArea::class, 'coverable');
+    }
+
     public function payAsYouGo()
     {
         return $this->morphOne(PayAsYouGo::class, 'pay_as_you_goable');
