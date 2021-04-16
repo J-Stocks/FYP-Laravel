@@ -18,7 +18,6 @@ class CreatePayAsYouGosTable extends Migration
             $table->double('base_rate');
             $table->double('unit_rate');
             $table->string('unit');
-            $table->morphs('pay_as_you_goable');
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ class CreatePhonesTable extends Migration
             $table->text('description');
             $table->dateTime('valid_from');
             $table->dateTime('valid_to');
+            $table->morphs('payable');
             $table->timestamps();
         });
     }

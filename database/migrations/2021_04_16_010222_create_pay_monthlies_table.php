@@ -18,7 +18,6 @@ class CreatePayMonthliesTable extends Migration
             $table->double('value');
             $table->integer('minimum_months');
             $table->double('cancellation_cost');
-            $table->morphs('pay_monthlyable');
             $table->timestamps();
         });
     }

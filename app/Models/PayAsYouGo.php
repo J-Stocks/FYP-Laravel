@@ -15,8 +15,33 @@ class PayAsYouGo extends Model
         'unit',
     ];
 
-    public function payAsYouGoable()
+    public function electricity()
     {
-        return $this->morphTo();
+        return $this->morphOne(Electricity::class, 'payable');
+    }
+
+    public function gas()
+    {
+        return $this->morphOne(Gas::class, 'payable');
+    }
+
+    public function internet()
+    {
+        return $this->morphOne(Internet::class, 'payable');
+    }
+
+    public function phone()
+    {
+        return $this->morphOne(Phone::class, 'payable');
+    }
+
+    public function tv()
+    {
+        return $this->morphOne(TV::class, 'payable');
+    }
+
+    public function water()
+    {
+        return $this->morphOne(Water::class, 'payable');
     }
 }

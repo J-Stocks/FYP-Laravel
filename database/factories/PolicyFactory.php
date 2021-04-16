@@ -24,8 +24,8 @@ class PolicyFactory extends Factory
     public function definition()
     {
         return [
-            'customer_id' => Customer::inRandomOrder()->get()->id,
-            'deal_id' => Deal::inRandomOrder()->get()->id,
+            'customer_id' => Customer::inRandomOrder()->first()->id,
+            'deal_id' => Deal::inRandomOrder()->first()->id,
         ];
     }
 }

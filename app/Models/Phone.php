@@ -19,13 +19,8 @@ class Phone extends Model
         return $this->morphMany(CoverageArea::class, 'coverable');
     }
 
-    public function payAsYouGo()
+    public function payable()
     {
-        return $this->morphOne(PayAsYouGo::class, 'pay_as_you_goable');
-    }
-
-    public function payMonthly()
-    {
-        return $this->morphOne(PayMonthly::class, 'pay_monthlyable');
+        return $this->morphTo();
     }
 }
