@@ -9,6 +9,12 @@ class PayMonthly extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'value',
+        'minimum_months',
+        'cancellation_cost',
+    ];
+
     public function payMonthlyable()
     {
         return $this->morphTo();
