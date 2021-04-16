@@ -18,7 +18,6 @@ class CreateTVSTable extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->string('name');
             $table->text('description');
-            $table->morphs('payable');
             $table->timestampsTz('valid_from');
             $table->timestampsTz('valid_to');
             $table->timestamps();
