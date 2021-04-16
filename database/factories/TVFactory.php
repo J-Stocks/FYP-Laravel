@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\PayAsYouGo;
 use App\Models\PayMonthly;
 use App\Models\Supplier;
 use App\Models\TV;

@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\CoverageArea;
 use App\Models\Internet;
-use App\Models\PayAsYouGo;
-use App\Models\PayMonthly;
 use Illuminate\Database\Seeder;
 
 class InternetSeeder extends Seeder
