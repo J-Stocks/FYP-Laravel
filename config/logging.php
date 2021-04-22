@@ -100,6 +100,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'dbtest' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/dbtest.log'),
+        ]
     ],
 
 ];
