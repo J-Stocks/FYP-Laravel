@@ -27,7 +27,6 @@ class DatabaseTest extends TestCase
         $results = $this->iterateQuery($query);
         $this->dbLog('Tested simple read of Deal object '.static::TEST_ITERATIONS.' times.');
         $this->printStats($results);
-//        $this->dbLog($results);
     }
 
     public function test_simple_create()
