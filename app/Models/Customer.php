@@ -9,6 +9,10 @@ class Customer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function deals()
     {
         return $this->hasManyThrough(Deal::class, Policy::class);
