@@ -16,7 +16,7 @@ class CreateCoverageAreasTable extends Migration
         Schema::create('coverage_areas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->geometry('region')->nullable();
+            $table->string('region')->nullable();
             $table->timestamps();
         });
     }
