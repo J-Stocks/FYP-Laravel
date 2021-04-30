@@ -4,8 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\Customer;
 use App\Models\Deal;
+use App\Models\Electricity;
+use App\Models\Gas;
 use App\Models\Supplier;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -69,6 +70,59 @@ class DatabaseTest extends TestCase
         };
         $results = $this->iterateQuery($query);
         $this->dbLog('Tested simple delete of Customer object '.static::TEST_ITERATIONS.' times.');
+        $this->printStats($results);
+    }
+
+    public function test_complex_read()
+    {
+        $this->setupDbTest();
+        $query = function ($iteration) {
+            Deal::has('electricities')->get();
+            return DB::getQueryLog()[$iteration];
+        };
+        $results = $this->iterateQuery($query);
+        $this->dbLog('Tested read of all deals that include electricity '.static::TEST_ITERATIONS.' times.');
+        $this->printStats($results);
+    }
+
+    public function test_complex_create()
+    {
+        $this->setupDbTest();
+        $query = function ($iteration) {
+            $newElectricity = Electricity::factory()->make();
+            $newElectricity->save();
+            $newElectricity->delete();
+            return DB::getQueryLog()[(4 * $iteration) + 1];
+        };
+        $results = $this->iterateQuery($query);
+        $this->dbLog('Tested creation of the payment record associated with a new Electricity object '.static::TEST_ITERATIONS.' times.');
+        $this->printStats($results);
+    }
+
+    public function test_complex_update()
+    {
+        $this->setupDbTest();
+        $query = function ($iteration) {
+            DB::table('pay_monthlies')->increment('value', 3);
+            return DB::getQueryLog()[$iteration];
+        };
+        $results = $this->iterateQuery($query);
+        $this->dbLog('Tested complex update of a PayMonthly object '.static::TEST_ITERATIONS.' times.');
+        $this->printStats($results);
+    }
+
+    public function test_complex_delete()
+    {
+        $this->setupDbTest();
+        $query = function ($iteration) {
+            $deal = Deal::whereHas('gases')->inRandomOrder()->first();
+            $deal->gases()->detach();
+            $gas = Gas::inRandomOrder()->first();
+            $deal->gases()->attach($gas);
+            return DB::getQueryLog()[(4 * $iteration) + 1];
+        };
+        $results = $this->iterateQuery($query);
+        $this->dbLog('Tested deletion of the relationship between a Deal and Gas '.static::TEST_ITERATIONS.' times.');
         $this->printStats($results);
     }
 
