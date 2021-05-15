@@ -24,32 +24,16 @@ class InternetFactory extends Factory
      */
     public function definition()
     {
-        $supplierId = Supplier::inRandomOrder()->first()->id;
+        $suppliers = Supplier::all();
+        $supplierId = $suppliers[rand(0, (count($suppliers) - 1))]->id;
         $validFrom = $this->faker->dateTimeBetween('-20 years', 'now');
         $validTo = $this->faker->dateTimeBetween($validFrom, (clone $validFrom)->modify('+20 years'));
-        if (rand(0,1)) {
-            $paymentId = PayAsYouGo::create([
-                'base_rate' => rand(1, 100),
-                'unit_rate' => rand(1, 100),
-                'unit' => 'GB',
-            ]);
-            $paymentType = PayAsYouGo::class;
-        } else {
-            $paymentId = PayMonthly::create([
-                'value' => rand(1, 100),
-                'minimum_months' => rand(0, 24),
-                'cancellation_cost' => rand(0, 100),
-            ])->id;
-            $paymentType = PayMonthly::class;
-        }
         return [
             'supplier_id' => $supplierId,
             'name' => ucwords($this->faker->word),
             'description' => $this->faker->paragraph,
             'valid_from' => $validFrom,
             'valid_to' => $validTo,
-            'payable_id' => $paymentId,
-            'payable_type' => $paymentType,
         ];
     }
 }

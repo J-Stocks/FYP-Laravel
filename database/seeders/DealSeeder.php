@@ -22,28 +22,34 @@ class DealSeeder extends Seeder
     {
         Deal::factory()->times(50)->create()->each(function ($deal) {
             if (rand(0, 1)) {
-                $electricity = Electricity::inRandomOrder()->first();
-                $deal->electricities()->attach($electricity);
+                $electricities = Electricity::all();
+                $electricity = $electricities[rand(0, (count($electricities) - 1))];
+                $deal->electricities()->save($electricity);
             }
             if (rand(0, 1)) {
-                $gas = Gas::inRandomOrder()->first();
-                $deal->gases()->attach($gas);
+                $gases = Gas::all();
+                $gas = $gases[rand(0, (count($gases) - 1))];
+                $deal->gases()->save($gas);
             }
             if (rand(0, 1)) {
-                $internet = Internet::inRandomOrder()->first();
-                $deal->internets()->attach($internet);
+                $internets = Internet::all();
+                $internet = $internets[rand(0, (count($internets) - 1))];
+                $deal->internets()->save($internet);
             }
             if (rand(0, 1)) {
-                $phone = Phone::inRandomOrder()->first();
-                $deal->phones()->attach($phone);
+                $phones = Phone::all();
+                $phone = $phones[rand(0, (count($phones) - 1))];
+                $deal->phones()->save($phone);
             }
             if (rand(0, 1)) {
-                $tv = TV::inRandomOrder()->first();
-                $deal->tvs()->attach($tv);
+                $tvs = TV::all();
+                $tv = $tvs[rand(0, (count($tvs) - 1))];
+                $deal->tvs()->save($tv);
             }
             if (rand(0, 1)) {
-                $water = Water::inRandomOrder()->first();
-                $deal->waters()->attach($water);
+                $waters = Water::all();
+                $water = $waters[rand(0, (count($waters) - 1))];
+                $deal->waters()->save($water);
             }
         });
     }

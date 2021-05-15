@@ -23,9 +23,13 @@ class PolicyFactory extends Factory
      */
     public function definition()
     {
+        $customers = Customer::all();
+        $customerId = $customers[rand(0, (count($customers) - 1))]->id;
+        $deals= Customer::all();
+        $dealId = $deals[rand(0, (count($deals) - 1))]->id;
         return [
-            'customer_id' => Customer::inRandomOrder()->first()->id,
-            'deal_id' => Deal::inRandomOrder()->first()->id,
+            'customer_id' => $customerId,
+            'deal_id' => $dealId,
         ];
     }
 }

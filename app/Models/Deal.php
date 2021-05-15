@@ -24,7 +24,7 @@ class Deal extends Model
         return $this->embedsOne(Internet::class);
     }
 
-    public function embedsOne()
+    public function phones()
     {
         return $this->embedsOne(Phone::class);
     }

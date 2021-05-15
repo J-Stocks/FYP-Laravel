@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\CoverageArea;
+use App\Models\PayAsYouGo;
+use App\Models\PayMonthly;
 use App\Models\Phone;
 use Illuminate\Database\Seeder;
 
@@ -16,9 +18,24 @@ class PhoneSeeder extends Seeder
     public function run()
     {
         Phone::factory()->times(50)->create()->each(function($coverable) {
-            $coverageAreas = CoverageArea::inRandomOrder()->limit(rand(1, 5))->get();
+            $coverageAreas = CoverageArea::all()->shuffle()->slice(0, rand(1, 4));
             foreach ($coverageAreas as $coverageArea) {
-                $coverageArea->phones()->attach($coverable);
+                $coverable->coverageAreas()->save($coverageArea);
+            }
+            if (rand(0,1)) {
+                $payAsYouGo = PayAsYouGo::create([
+                    'base_rate' => rand(1, 100),
+                    'unit_rate' => rand(1, 100),
+                    'unit' => 'minute',
+                ]);
+                $coverable->payAsYouGo()->save($payAsYouGo);
+            } else {
+                $payMonthly = PayMonthly::create([
+                    'value' => rand(1, 100),
+                    'minimum_months' => rand(0, 24),
+                    'cancellation_cost' => rand(0, 100),
+                ]);
+                $coverable->payMonthly()->save($payMonthly);
             }
         });
     }
