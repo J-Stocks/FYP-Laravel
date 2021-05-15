@@ -3,40 +3,35 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Deal extends Model
 {
     use HasFactory;
 
-    public function customers()
-    {
-        return $this->hasManyThrough(Customer::class, Policy::class);
-    }
-
     public function electricities()
     {
-        return $this->morphedByMany(Electricity::class, 'dealable');
+        return $this->embedsOne(Electricity::class);
     }
 
     public function gases()
     {
-        return $this->morphedByMany(Gas::class, 'dealable');
+        return $this->embedsOne(Gas::class);
     }
 
     public function internets()
     {
-        return $this->morphedByMany(Internet::class, 'dealable');
+        return $this->embedsOne(Internet::class);
     }
 
-    public function phones()
+    public function embedsOne()
     {
-        return $this->morphedByMany(Phone::class, 'dealable');
+        return $this->embedsOne(Phone::class);
     }
 
     public function tvs()
     {
-        return $this->morphedByMany(TV::class, 'dealable');
+        return $this->embedsOne(TV::class);
     }
 
     public function policies()
@@ -46,6 +41,6 @@ class Deal extends Model
 
     public function waters()
     {
-        return $this->morphedByMany(Water::class, 'dealable');
+        return $this->embedsOne(Water::class);
     }
 }

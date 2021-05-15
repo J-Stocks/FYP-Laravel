@@ -3,24 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Phone extends Model
 {
     use HasFactory;
 
-    public function deals()
-    {
-        return $this->morphMany(Deal::class, 'dealable');
-    }
-
     public function coverageAreas()
     {
-        return $this->morphMany(CoverageArea::class, 'coverable');
+        return $this->embedsMany(CoverageArea::class);
     }
 
-    public function payable()
+    public function payAsYouGo()
     {
-        return $this->morphTo();
+        return $this->embedsOne(PayAsYouGo::class);
+    }
+
+    public function payMonthly()
+    {
+        return $this->embedsOne(PayMonthly::class);
     }
 }

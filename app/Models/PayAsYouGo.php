@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class PayAsYouGo extends Model
 {
@@ -15,33 +15,4 @@ class PayAsYouGo extends Model
         'unit',
     ];
 
-    public function electricity()
-    {
-        return $this->morphOne(Electricity::class, 'payable');
-    }
-
-    public function gas()
-    {
-        return $this->morphOne(Gas::class, 'payable');
-    }
-
-    public function internet()
-    {
-        return $this->morphOne(Internet::class, 'payable');
-    }
-
-    public function phone()
-    {
-        return $this->morphOne(Phone::class, 'payable');
-    }
-
-    public function tv()
-    {
-        return $this->morphOne(TV::class, 'payable');
-    }
-
-    public function water()
-    {
-        return $this->morphOne(Water::class, 'payable');
-    }
 }

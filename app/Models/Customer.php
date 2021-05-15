@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Customer extends Model
 {
@@ -12,11 +12,6 @@ class Customer extends Model
     protected $fillable = [
         'name',
     ];
-
-    public function deals()
-    {
-        return $this->hasManyThrough(Deal::class, Policy::class);
-    }
 
     public function policies()
     {
