@@ -13,11 +13,8 @@ class CreateDealsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deals', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->timestamps();
+        Schema::connection($this->connection)->table('deals', function (Blueprint  $collection) {
+            $collection->index('name');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateDealsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deals');
+        Schema::connection($this->connection)->table('deals', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }

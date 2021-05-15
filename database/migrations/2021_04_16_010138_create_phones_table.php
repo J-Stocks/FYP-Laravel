@@ -13,15 +13,8 @@ class CreatePhonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('phones', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('supplier_id');
-            $table->string('name');
-            $table->text('description');
-            $table->dateTime('valid_from');
-            $table->dateTime('valid_to');
-            $table->morphs('payable');
-            $table->timestamps();
+        Schema::connection($this->connection)->table('phones', function (Blueprint  $collection) {
+            $collection->index('name');
         });
     }
 
@@ -32,6 +25,8 @@ class CreatePhonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phones');
+        Schema::connection($this->connection)->table('phones', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }

@@ -13,11 +13,8 @@ class CreateCoverageAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('coverage_areas', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('region')->nullable();
-            $table->timestamps();
+        Schema::connection($this->connection)->table('coverage_areas', function (Blueprint  $collection) {
+            $collection->index('name');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCoverageAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coverage_areas');
+        Schema::connection($this->connection)->table('coverage_areas', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }

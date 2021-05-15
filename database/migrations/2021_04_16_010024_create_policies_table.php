@@ -13,12 +13,7 @@ class CreatePoliciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('policies', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('deal_id');
-            $table->timestamps();
-        });
+        Schema::connection($this->connection)->table('policies', function (Blueprint  $collection) {});
     }
 
     /**
@@ -28,6 +23,8 @@ class CreatePoliciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('policies');
+        Schema::connection($this->connection)->table('policies', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }

@@ -13,15 +13,8 @@ class CreateElectricitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('electricities', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('supplier_id');
-            $table->string('name');
-            $table->text('description');
-            $table->dateTime('valid_from');
-            $table->dateTime('valid_to');
-            $table->morphs('payable');
-            $table->timestamps();
+        Schema::connection($this->connection)->table('electricities', function (Blueprint  $collection) {
+            $collection->index('name');
         });
     }
 
@@ -32,6 +25,8 @@ class CreateElectricitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('electricities');
+        Schema::connection($this->connection)->table('electricities', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }

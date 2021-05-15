@@ -13,15 +13,8 @@ class CreateTVSTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_v_s', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('supplier_id');
-            $table->string('name');
-            $table->text('description');
-            $table->dateTime('valid_from');
-            $table->dateTime('valid_to');
-            $table->morphs('payable');
-            $table->timestamps();
+        Schema::connection($this->connection)->table('t_v_s', function (Blueprint  $collection) {
+            $collection->index('name');
         });
     }
 
@@ -32,6 +25,8 @@ class CreateTVSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_v_s');
+        Schema::connection($this->connection)->table('t_v_s', function (Blueprint  $collection) {
+            $collection->drop();
+        });
     }
 }
