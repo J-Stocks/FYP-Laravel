@@ -48,7 +48,7 @@ class DatabaseTest extends TestCase
     {
         $this->setupDbTest();
         $query = function ($iteration) {
-            $customer = Customer::inRandomOrder()->first();
+            $customer = Customer::all()->shuffle()[0];
             $oldName = $customer->name;
             $customer->update(['name' => $this->faker->name]);
             $customer->update(['name' => $oldName]);
@@ -77,7 +77,7 @@ class DatabaseTest extends TestCase
     {
         $this->setupDbTest();
         $query = function ($iteration) {
-            Deal::has('electricities')->get();
+            Deal::where('electricities', 'exists', true)->get();
             return DB::getQueryLog()[$iteration];
         };
         $results = $this->iterateQuery($query);
@@ -92,7 +92,7 @@ class DatabaseTest extends TestCase
             $newElectricity = Electricity::factory()->make();
             $newElectricity->save();
             $newElectricity->delete();
-            return DB::getQueryLog()[(4 * $iteration) + 1];
+            return DB::getQueryLog()[(3 * $iteration) + 1];
         };
         $results = $this->iterateQuery($query);
         $this->dbLog('Tested creation of the payment record associated with a new Electricity object '.static::TEST_ITERATIONS.' times.');
@@ -115,11 +115,12 @@ class DatabaseTest extends TestCase
     {
         $this->setupDbTest();
         $query = function ($iteration) {
-            $deal = Deal::whereHas('gases')->inRandomOrder()->first();
-            $deal->gases()->detach();
-            $gas = Gas::inRandomOrder()->first();
-            $deal->gases()->attach($gas);
-            return DB::getQueryLog()[(4 * $iteration) + 1];
+            $deal = Deal::all()->shuffle()[0];
+            $gas = Gas::factory()->make();
+            $deal->gases()->save($gas);
+            $deal->gases()->delete($gas);
+            $this->dbLog(DB::getQueryLog());
+            return DB::getQueryLog()[(4 * $iteration) + 3];
         };
         $results = $this->iterateQuery($query);
         $this->dbLog('Tested deletion of the relationship between a Deal and Gas '.static::TEST_ITERATIONS.' times.');
