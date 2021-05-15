@@ -119,7 +119,6 @@ class DatabaseTest extends TestCase
             $gas = Gas::factory()->make();
             $deal->gases()->save($gas);
             $deal->gases()->delete($gas);
-            $this->dbLog(DB::getQueryLog());
             return DB::getQueryLog()[(4 * $iteration) + 3];
         };
         $results = $this->iterateQuery($query);
